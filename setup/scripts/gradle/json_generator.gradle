@@ -1,0 +1,545 @@
+/**
+ * Minecraft Forge Modding Json File Generator
+ *
+ * Copyright 2017 Hidetsugu Tamaki(Ralph). All right reserved.
+ */
+
+import groovy.swing.SwingBuilder
+
+import java.awt.*
+import java.nio.charset.StandardCharsets
+import java.nio.file.*
+import java.util.stream.Collectors
+import java.util.stream.IntStream
+
+task generateBlockstateJson {
+    doLast {
+        new BlockstateJsonGenerator(FileSystems.getDefault().getPath("${project.rootDir}")).start()
+    }
+}
+
+task generateItemJson {
+    doLast {
+        new ItemJsonGenerator(FileSystems.getDefault().getPath("${project.rootDir}")).start()
+    }
+}
+
+task generateRecipeJson {
+    doLast {
+        new RecipeJsonGenerator(FileSystems.getDefault().getPath("${project.rootDir}")).start()
+    }
+}
+
+configure(generateBlockstateJson) {
+    group = 'minecraft'
+    description = 'Create blockstate json file'
+}
+
+configure(generateItemJson) {
+    group = 'minecraft'
+    description = 'Create item json file'
+}
+
+configure(generateRecipeJson) {
+    group = 'minecraft'
+    description = 'Create recipe json file'
+}
+
+class BlockstateJsonGenerator {
+
+    enum Textbook {
+        MY_BLOCK("MyBlock", "block_myblock", 0, "", 0),
+        MY_BLOCK_MULTI("MyBlock(MultiTexture)", "block_myblock", 1, "", 0),
+        FORTUNE_BLOCK("FortuneBlock", "block_fortune", 0, "", 0),
+        RAINBOW("Rainbow", "block_rainbow", 0, "color", 7),
+        SOUND("Sound", "block_sound", 1, "", 0),
+        REDSTONE_INPUT("Redstone(Input)", "block_redstone_input", 0, "", 0),
+        REDSTONE_CLOCK("Redstone(Clock)", "block_redstone_clock", 0, "", 0),
+        FOOTPRINTS_SAND("FootprintsSand", "block_footprints_sand", 0, "color", 5),
+        BUILDING_BLOCK("BuildingBlock", "block_building_block", 0, "", 0)
+
+        final String text
+        final String dirName
+        final int tInd
+        final String prop
+        final int propNum
+
+        private Textbook(text, dirName, tInd, prop, propNum) {
+            this.text = text
+            this.dirName = dirName
+            this.tInd = tInd
+            this.prop = prop
+            this.propNum = propNum
+        }
+    }
+
+    final Path rootPath
+    final Path targetPath
+    final Path jsonPath
+
+    BlockstateJsonGenerator(Path rootPath) {
+        this.rootPath = rootPath
+        this.targetPath = rootPath.resolve("src/main/resources/assets/examplemod/")
+        this.jsonPath = rootPath.resolve("setup/data/json")
+    }
+
+    def start() {
+        new SwingBuilder().edt {
+            dialog(modal: true, title: 'Blockstate JSON Generator', alwaysOnTop: true, resizable: true, locationRelativeTo: null, pack: true, show: true) {
+                borderLayout(vgap: 10)
+
+                label(text: "ベースを選択して下さい", constraints: BorderLayout.NORTH)
+
+                button(defaultButton: true, text: '教科書', actionPerformed: {
+                    dispose()
+                    textbook()
+                }, constraints: BorderLayout.CENTER)
+
+                button(defaultButton: false, text: 'オリジナル', actionPerformed: {
+                    dispose()
+                    original()
+                }, constraints: BorderLayout.SOUTH)
+            }
+        }
+    }
+
+    def textbook() {
+        new SwingBuilder().edt {
+            dialog(modal: true, title: 'Blockstate JSON Generator', alwaysOnTop: true, resizable: true, locationRelativeTo: null, pack: true, show: true) {
+                borderLayout(vgap: 10)
+
+                label(text: "教科書を選択して下さい。", constraints: BorderLayout.NORTH)
+
+                def combo1 = comboBox(items: [
+                        Textbook.MY_BLOCK.text,
+                        Textbook.MY_BLOCK_MULTI.text,
+                        Textbook.FORTUNE_BLOCK.text,
+                        Textbook.RAINBOW.text,
+                        Textbook.SOUND.text,
+                        Textbook.REDSTONE_INPUT.text,
+                        Textbook.REDSTONE_CLOCK.text,
+                        Textbook.FOOTPRINTS_SAND.text,
+                        Textbook.BUILDING_BLOCK.text
+                ], selectedIndex: 0, constraints: BorderLayout.CENTER)
+
+                button(defaultButton: true, text: 'OK', actionPerformed: {
+                    dispose()
+                    genTextbook(combo1.selectedIndex)
+                }, constraints: BorderLayout.SOUTH)
+            }
+        }
+    }
+
+    def genTextbook(int selectedIndex) {
+        def t = Textbook.values()[selectedIndex]
+
+        // 基本的に genOriginal を使って生成するが、例外的なものはコピーする
+
+        if (t == Textbook.REDSTONE_INPUT) {
+            Files.copy(
+                    jsonPath.resolve("blockstates/block_redstone_input.json"),
+                    targetPath.resolve("blockstates/block_redstone_input.json"),
+                    StandardCopyOption.REPLACE_EXISTING)
+            Files.copy(
+                    jsonPath.resolve("models_block/block_redstone_0.json"),
+                    targetPath.resolve("models/block/block_redstone_0.json"),
+                    StandardCopyOption.REPLACE_EXISTING)
+            Files.copy(
+                    jsonPath.resolve("models_block/block_redstone_1.json"),
+                    targetPath.resolve("models/block/block_redstone_1.json"),
+                    StandardCopyOption.REPLACE_EXISTING)
+            Files.copy(
+                    jsonPath.resolve("models_block/block_redstone_2.json"),
+                    targetPath.resolve("models/block/block_redstone_2.json"),
+                    StandardCopyOption.REPLACE_EXISTING)
+            Files.copy(
+                    jsonPath.resolve("models_block/block_redstone_3.json"),
+                    targetPath.resolve("models/block/block_redstone_3.json"),
+                    StandardCopyOption.REPLACE_EXISTING)
+            Files.copy(
+                    jsonPath.resolve("models_item/block_redstone_input.json"),
+                    targetPath.resolve("models/item/block_redstone_input.json"),
+                    StandardCopyOption.REPLACE_EXISTING)
+            return
+        }
+
+        if (t == Textbook.REDSTONE_CLOCK) {
+            Files.copy(
+                    jsonPath.resolve("blockstates/block_redstone_clock.json"),
+                    targetPath.resolve("blockstates/block_redstone_clock.json"),
+                    StandardCopyOption.REPLACE_EXISTING)
+            Files.copy(
+                    jsonPath.resolve("models_block/block_redstone_off.json"),
+                    targetPath.resolve("models/block/block_redstone_off.json"),
+                    StandardCopyOption.REPLACE_EXISTING)
+            Files.copy(
+                    jsonPath.resolve("models_block/block_redstone_on.json"),
+                    targetPath.resolve("models/block/block_redstone_on.json"),
+                    StandardCopyOption.REPLACE_EXISTING)
+            Files.copy(
+                    jsonPath.resolve("models_item/block_redstone_clock.json"),
+                    targetPath.resolve("models/item/block_redstone_clock.json"),
+                    StandardCopyOption.REPLACE_EXISTING)
+            return
+        }
+
+        if (t == Textbook.SOUND) {
+            Files.copy(
+                    jsonPath.resolve("sounds.json"),
+                    targetPath.resolve("sounds.json"),
+                    StandardCopyOption.REPLACE_EXISTING)
+        }
+
+        genOriginal(t.dirName, t.tInd, t.prop, t.propNum)
+    }
+
+    def original() {
+        new SwingBuilder().edt {
+            dialog(modal: true, title: 'Blockstate JSON Generator', alwaysOnTop: true, resizable: true, locationRelativeTo: null, pack: true, show: true) {
+                vbox(alignmentX: 0.0f) { // Put everything below each other
+                    label(text: "RegistoryName を入力して下さい。")
+                    def input1 = textField()
+                    label(text: "テクスチャの種類を選択して下さい。")
+                    def combo1 = comboBox(items: [
+                            "1種類",
+                            "6種類"
+                    ], selectedIndex: 0)
+                    label(text: "Property名を入力して下さい。")
+                    def input2 = textField()
+                    label(text: "Propertyの数を入力して下さい。")
+                    def spinner = spinner(model: spinnerNumberModel(minimum: 0, maximum: 10, stepSize: 1))
+                    button(defaultButton: true, text: 'OK', actionPerformed: {
+                        dispose()
+                        genOriginal(input1.text, combo1.selectedIndex, input2.text, spinner.value)
+                    })
+                }
+            }
+        }
+    }
+
+    def genOriginal(String registryName, int faceType, String propertyName, int propertyLength) {
+
+        def joiner = Collectors.joining(",\n    ")
+
+        // blockstates/hoge.json 生成
+        // 穴埋め無し
+
+        def path = targetPath.resolve("blockstates").resolve("${registryName}.json")
+        def w = newBufferedWriter(path)
+
+        w.writeLine("{")
+        w.writeLine("  \"variants\": {")
+        if (propertyLength == 0) {
+            w.writeLine("    \"\": { \"model\": \"examplemod:block/$registryName\" }")
+        } else {
+            w.writeLine("    ${IntStream.range(0, propertyLength).mapToObj(i -> "\"${propertyName}=$i\": { \"model\": \"examplemod:block/${registryName}_$i\" }").collect(joiner)}")
+        }
+        w.writeLine("  }")
+        w.write("}")
+        w.close()
+
+        // models/item/hoge.json 生成
+
+        path = targetPath.resolve("models/item").resolve("${registryName}.json")
+        w = newBufferedWriter(path)
+
+        w.writeLine("{")
+        w.writeLine("  \"parent\": \"examplemod:block/\"")
+        w.write("}")
+        w.close()
+
+        // models/block/hoge.json 生成
+        // propertyLength の数だけjsonを生成する
+
+        def face = new String[][]{
+                new String[]{"all"},
+                new String[]{"particle", "down", "up", "east", "west", "north", "south"}
+        }
+
+        if (propertyLength == 0) {
+            path = targetPath.resolve("models/block").resolve("${registryName}.json")
+            w = newBufferedWriter(path)
+
+            w.writeLine("{")
+            w.writeLine("  \"parent\": \"block/cube_all\",")
+            w.writeLine("  \"textures\": {")
+            w.writeLine("    ${Arrays.stream(face[faceType]).map(f -> "\"$f\": \"examplemod:blocks/\"").collect(joiner)}")
+            w.writeLine("  }")
+            w.write("}")
+            w.close()
+        } else {
+            IntStream.range(0, propertyLength).forEach(i -> {
+                path = targetPath.resolve("models/block").resolve("${registryName}_${i}.json")
+                w = newBufferedWriter(path)
+
+                w.writeLine("{")
+                w.writeLine("  \"parent\": \"block/cube_all\",")
+                w.writeLine("  \"textures\": {")
+                w.writeLine("    ${Arrays.stream(face[faceType]).map(f -> "\"$f\": \"examplemod:blocks/\"").collect(joiner)}")
+                w.writeLine("  }")
+                w.write("}")
+                w.close()
+            })
+        }
+    }
+
+    static def newBufferedWriter(Path path) {
+        return Files.newBufferedWriter(path, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
+    }
+}
+
+class ItemJsonGenerator {
+
+    enum Textbook {
+        MY_SWORD("MySword", "my_sword.json", "my_sword.json"),
+        MAGIC_STICK("MagicStick", "magic_stick.json", "magic_stick.json"),
+        HI_POTION("HiPotion", "hi_potion.json", "hi_potion.json"),
+        EXPLOSIVE_ARROW("ExplosiveArrow", "explosive_arrow.json", "explosive_arrow.json"),
+        MY_SNOWBALL("MySnowball", "my_snowball.json", "my_snowball.json"),
+        BULL("BullSpawnEgg", "bull_spawn_egg.json", "bull_spawn_egg.json"),
+        TOBISUKE("TobisukeSpawnEgg", "tobisuke_spawn_egg.json", "tobisuke_spawn_egg.json"),
+
+        final String text
+        final String src
+        final String dest
+
+        private Textbook(text, src, dest) {
+            this.text = text
+            this.src = src
+            this.dest = dest
+        }
+    }
+
+    final Path rootPath
+    final Path targetPath
+
+    ItemJsonGenerator(Path rootPath) {
+        this.rootPath = rootPath
+        this.targetPath = rootPath.resolve("src/main/resources/assets/examplemod/models/item")
+    }
+
+    def start() {
+        new SwingBuilder().edt {
+            dialog(modal: true, title: 'Item JSON Generator', alwaysOnTop: true, resizable: true, locationRelativeTo: null, pack: true, show: true) {
+                borderLayout(vgap: 10)
+
+                label(text: "ベースを選択して下さい", constraints: BorderLayout.NORTH)
+
+                button(defaultButton: true, text: '教科書', actionPerformed: {
+                    dispose()
+                    textbook()
+                }, constraints: BorderLayout.CENTER)
+
+                button(defaultButton: false, text: 'オリジナル', actionPerformed: {
+                    dispose()
+                    original()
+                }, constraints: BorderLayout.SOUTH)
+            }
+        }
+    }
+
+    def textbook() {
+        new SwingBuilder().edt {
+            dialog(modal: true, title: 'Item JSON Generator', alwaysOnTop: true, resizable: true, locationRelativeTo: null, pack: true, show: true) {
+                borderLayout(vgap: 10)
+
+                label(text: "教科書を選択して下さい。", constraints: BorderLayout.NORTH)
+
+                def combo1 = comboBox(items: [
+                        Textbook.MY_SWORD.text,
+                        Textbook.MAGIC_STICK.text,
+                        Textbook.HI_POTION.text,
+                        Textbook.EXPLOSIVE_ARROW.text,
+                        Textbook.MY_SNOWBALL.text,
+                        Textbook.BULL.text,
+                        Textbook.TOBISUKE.text
+                ], selectedIndex: 0, constraints: BorderLayout.CENTER)
+
+                button(defaultButton: true, text: 'OK', actionPerformed: {
+                    dispose()
+                    genTextbook(combo1.selectedIndex)
+                }, constraints: BorderLayout.SOUTH)
+            }
+        }
+    }
+
+    def genTextbook(int selectedIndex) {
+        def selected = Textbook.values()[selectedIndex]
+        println("Textbook Selected:" + selected)
+        def source = rootPath.resolve("setup").resolve("data").resolve("json").resolve("items").resolve(selected.src)
+        def destination = targetPath.resolve(selected.dest)
+        Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING)
+
+        if (selected == Textbook.EXPLOSIVE_ARROW) {
+            Files.copy(
+                    rootPath.resolve("setup/data/json/tags_items/arrows.json"),
+                    rootPath.resolve("src/main/resources/data/minecraft/tags/items/arrows.json"),
+                    StandardCopyOption.REPLACE_EXISTING)
+        }
+    }
+
+    def original() {
+        new SwingBuilder().edt {
+            dialog(modal: true, title: 'Item JSON Generator', alwaysOnTop: true, resizable: true, locationRelativeTo: null, pack: true, show: true) {
+                vbox(alignmentX: 0.0f) { // Put everything below each other
+                    label(text: "RegistoryName を入力して下さい。")
+                    def input1 = textField()
+                    label(text: "アイテムの種類を選択して下さい。")
+                    def combo1 = comboBox(items: [
+                            "剣",
+                            "それ以外"
+                    ], selectedIndex: 0)
+                    button(defaultButton: true, text: 'OK', actionPerformed: {
+                        dispose()
+                        genOriginal(input1.text, combo1.selectedIndex)
+                    })
+                }
+            }
+        }
+    }
+
+    def genOriginal(String name, int selectedIndex) {
+        println("Original Selected:" + name)
+        def destination = targetPath.resolve(name + ".json")
+        final BufferedWriter writer = Files.newBufferedWriter(destination, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
+        writer.writeLine("{")
+        if (selectedIndex == 0) {
+            writer.writeLine("  \"parent\": \"item/handheld\",")
+        } else {
+            writer.writeLine("  \"parent\": \"item/generated\",")
+        }
+        writer.writeLine("  \"textures\": {")
+        writer.writeLine("    \"layer0\": \"\"")
+        writer.writeLine("  }")
+        writer.write("}")
+        writer.close()
+    }
+}
+
+class RecipeJsonGenerator {
+
+    enum Textbook {
+        CREEPER_SPAWN_EGG("CreeperSpawnEgg", "creeper_spawn_egg.json", "creeper_spawn_egg.json"),
+        MYBLOCK("MyBlock", "myblock.json", "myblock.json"),
+
+        final String text
+        final String src
+        final String dest
+
+        private Textbook(text, src, dest) {
+            this.text = text
+            this.src = src
+            this.dest = dest
+        }
+    }
+
+
+    final Path rootPath
+    final Path targetPath
+
+    RecipeJsonGenerator(Path rootPath) {
+        this.rootPath = rootPath
+        this.targetPath = rootPath.resolve("src/main/resources/data/examplemod/recipes")
+    }
+
+
+    def start() {
+        new SwingBuilder().edt {
+            dialog(modal: true, title: 'Recipe JSON Generator', alwaysOnTop: true, resizable: true, locationRelativeTo: null, pack: true, show: true) {
+                borderLayout(vgap: 10)
+
+                label(text: "ベースを選択して下さい", constraints: BorderLayout.NORTH)
+
+                button(defaultButton: true, text: '教科書', actionPerformed: {
+                    dispose()
+                    textbook()
+                }, constraints: BorderLayout.CENTER)
+
+                button(defaultButton: false, text: 'オリジナル', actionPerformed: {
+                    dispose()
+                    original()
+                }, constraints: BorderLayout.SOUTH)
+            }
+        }
+    }
+
+    def textbook() {
+        new SwingBuilder().edt {
+            dialog(modal: true, title: 'Item Recipe Generator', alwaysOnTop: true, resizable: true, locationRelativeTo: null, pack: true, show: true) {
+                borderLayout(vgap: 10)
+
+                label(text: "教科書を選択して下さい。", constraints: BorderLayout.NORTH)
+
+                def combo1 = comboBox(items: [
+                        Textbook.CREEPER_SPAWN_EGG.text,
+                        Textbook.MYBLOCK.text
+                ], selectedIndex: 0, constraints: BorderLayout.CENTER)
+
+                button(defaultButton: true, text: 'OK', actionPerformed: {
+                    dispose()
+                    genTextbook(combo1.selectedIndex)
+                }, constraints: BorderLayout.SOUTH)
+            }
+        }
+    }
+
+    def genTextbook(int selectedIndex) {
+        def selected = Textbook.values()[selectedIndex]
+        println("Textbook Selected:" + selected)
+        def source = rootPath.resolve("setup").resolve("data").resolve("json").resolve("recipes").resolve(selected.src)
+        def destination = targetPath.resolve(selected.dest)
+        Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING)
+    }
+
+    def original() {
+        new SwingBuilder().edt {
+            dialog(modal: true, title: 'Item JSON Generator', alwaysOnTop: true, resizable: true, locationRelativeTo: null, pack: true, show: true) {
+                vbox(alignmentX: 0.0f) { // Put everything below each other
+                    label(text: "RegistoryName を入力して下さい。")
+                    def input1 = textField()
+                    label(text: "アイテムの種類数を選択して下さい。")
+                    def combo1 = comboBox(items: [
+                            "1", "2", "3", "4", "5", "6", "7", "8", "9"
+                    ], selectedIndex: 0)
+                    label(text: "クラフトされる数を入力して下さい。")
+                    def input2 = textField()
+                    button(defaultButton: true, text: 'OK', actionPerformed: {
+                        dispose()
+                        genOriginal(input1.text, combo1.selectedIndex, input2.text)
+                    })
+                }
+            }
+        }
+    }
+
+    def genOriginal(String name, int selectedIndex, String amount) {
+        println("Original Selected:" + name)
+        def destination = targetPath.resolve(name + ".json")
+        final BufferedWriter writer = Files.newBufferedWriter(destination, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
+        writer.writeLine("{")
+        writer.writeLine("  \"type\": \"minecraft:crafting_shaped\",")
+        writer.writeLine("  \"pattern\": [")
+        writer.writeLine("    \"   \",")
+        writer.writeLine("    \"   \",")
+        writer.writeLine("    \"   \"")
+        writer.writeLine("  ],")
+        writer.writeLine("  \"key\": {")
+        for (i in 0..selectedIndex) {
+            String keyChar = String.valueOf((char) (i + 65))
+            writer.writeLine("    \"$keyChar\": {")
+            writer.writeLine("      \"item\": \"\"")
+            if (i != selectedIndex) {
+                writer.writeLine("    },")
+            } else {
+                writer.writeLine("    }")
+            }
+        }
+        writer.writeLine("  },")
+        writer.writeLine("  \"result\": {")
+        writer.writeLine("    \"item\": \"\",")
+        writer.writeLine("    \"count\": $amount")
+        writer.writeLine("  }")
+        writer.write("}")
+        writer.close()
+    }
+}

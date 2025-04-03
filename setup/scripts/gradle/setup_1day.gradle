@@ -1,0 +1,44 @@
+
+import java.nio.file.*
+import groovy.util.AntBuilder
+
+
+task setup1dayBlock {
+    group = '1day'
+    description = 'setup 1day block. Data will be lost when executed'
+
+    doLast {
+        changeSrc("block")
+    }
+}
+
+task setup1dayMagicsStick {
+    group = '1day'
+    description = 'setup 1day block. Data will be lost when executed'
+
+    doLast {
+        changeSrc("magicstick")
+    }
+}
+
+task setup1daySword {
+    group = '1day'
+    description = 'setup 1day block. Data will be lost when executed'
+
+    doLast {
+        changeSrc("sword")
+    }
+}
+
+def changeSrc(String dirName) {
+    def projectRoot = FileSystems.getDefault().getPath("${project.rootDir}")
+    def srcZip = projectRoot.resolve("setup").resolve("data").resolve("1day").resolve(dirName).resolve("src.zip")
+    if (Files.notExists(srcZip)) {
+        throw new FileNotFoundException("Not found source zip of task${id}.")
+    }
+    def srcDir = projectRoot.resolve("src")
+    if (!srcDir.toFile().deleteDir()) {
+        throw new FileNotFoundException("Can't delete current src.")
+    }
+    new AntBuilder().unzip(src: srcZip.toFile(), dest: projectRoot, overwrite: "true")
+}

@@ -1,0 +1,91 @@
+/**
+ * Minecraft Forge Modding Backuper
+ *
+ */
+
+import groovy.swing.SwingBuilder
+
+import java.awt.BorderLayout
+import java.nio.charset.StandardCharsets
+import java.nio.file.*
+import java.nio.file.attribute.BasicFileAttributes
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+
+task backupMod {
+    doFirst {
+        new ModExporter(FileSystems.getDefault().getPath("${project.rootDir}")).start()
+    }
+}
+
+configure(backupMod) {
+    group = 'minecraft'
+    description = 'Backup mod to desktop'
+}
+
+
+class ModExporter {
+
+    static Path rootPath
+    static Path targetPath
+    static Path backupPath
+
+    ModExporter(Path rootPath) {
+        this.rootPath = rootPath
+        targetPath = rootPath.resolve("src")
+    }
+
+    def copyDirectory(Path source, Path target) throws IOException {
+        if (Files.exists(source)) {
+            Files.walkFileTree(source,
+                    new SimpleFileVisitor<Path>() {
+                        @Override
+                        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                            Path targetFile = target.resolve(source.relativize(file))
+                            Path parentDir = targetFile.getParent()
+                            Files.createDirectories(parentDir)
+                            Files.copy(file, targetFile, StandardCopyOption.REPLACE_EXISTING)
+                            return FileVisitResult.CONTINUE
+                        }
+                    })
+        }
+    }
+
+    def genBackupItem(String name) {
+        def ldt = LocalDateTime.now()
+        def formatter = DateTimeFormatter.ofPattern('yyyyMMddHHmmss')
+        String datePath = ldt.format(formatter)
+
+        Files.createDirectories(rootPath.resolve("backup").resolve(datePath))
+        backupPath = rootPath.resolve("backup").resolve(datePath).resolve("src")
+        copyDirectory(targetPath, backupPath)
+        println("Copy files finished.")
+
+
+        Path desktopPath = Paths.get(System.getProperty("user.home"))
+        String exportZipName = datePath + "_" + name + "_src.zip"
+        Path exportPath = desktopPath.resolve("Desktop").resolve(exportZipName)
+        new groovy.util.AntBuilder().zip(destfile: exportPath, basedir: backupPath.getParent())
+
+    }
+
+
+    def start() {
+        new SwingBuilder().edt {
+            dialog(modal: true, title: 'MOD exporter', alwaysOnTop: true, resizable: true, locationRelativeTo: null, pack: true, show: true) {
+                borderLayout(vgap: 10)
+                label(text: "メンバー名を入力して下さい．", constraints: BorderLayout.NORTH)
+                def input1 = textField(text: "")
+
+                button(defaultButton: true, text: 'OK', actionPerformed: {
+                    dispose()
+                    if (input1.text == "") {
+                        input1.text = "member"
+                    }
+                    genBackupItem(input1.text)
+                }, constraints: BorderLayout.SOUTH)
+            }
+        }
+    }
+}

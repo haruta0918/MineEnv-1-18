@@ -1,0 +1,202 @@
+/**
+ * Minecraft Forge Modding Exporter
+ *
+ */
+apply plugin: 'java'
+import groovy.swing.SwingBuilder
+import javax.swing.WindowConstants
+import java.nio.charset.StandardCharsets
+import java.nio.file.*
+import java.nio.file.attribute.BasicFileAttributes
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+task('exportModDialog') {
+    doFirst {
+        try {
+            new ModExporter(FileSystems.getDefault().getPath("${project.rootDir}")).start()
+        } catch (Exception e) {
+            throw new GradleScriptException("Dialog failed", e)
+        }
+    }
+}
+
+task('exportModMove') {
+    doFirst {
+        try {
+            Files.move(ModExporter.rootPath.resolve("build").resolve("libs").resolve("modid-1.0.jar"), ModExporter.rootPath.resolve("build").resolve("libs").resolve(ModExporter.modName + ".jar"), StandardCopyOption.REPLACE_EXISTING)
+            Path source = ModExporter.backupPath
+            Path target = ModExporter.targetPath
+            assert target.toFile().deleteDir()
+            assert !target.toFile().exists()
+            if (Files.exists(source)) {
+                Files.walkFileTree(source,
+                        new SimpleFileVisitor<Path>() {
+                            @Override
+                            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                                Path targetFile = target.resolve(source.relativize(file))
+                                Path parentDir = targetFile.getParent()
+                                Files.createDirectories(parentDir)
+                                Files.copy(file, targetFile, StandardCopyOption.REPLACE_EXISTING)
+                                return FileVisitResult.CONTINUE
+                            }
+                        })
+            }
+        } catch (Exception e) {
+            throw new GradleScriptException("Move failed", e)
+        }
+    }
+}
+
+build.mustRunAfter exportModDialog
+exportModMove.mustRunAfter build
+task exportMod(dependsOn: [exportModDialog, build, exportModMove])
+
+
+configure(exportMod) {
+    group = 'minecraft'
+    description = 'Export mod to jar file'
+}
+
+
+class ModExporter {
+
+    static Path rootPath
+    static Path targetPath
+    static String modName
+    static Path backupPath
+
+    ModExporter(Path rootPath) {
+        this.rootPath = rootPath
+        targetPath = rootPath.resolve("src")
+
+        // バックアップ用のフォルダ定義
+        def ldt = LocalDateTime.now()
+        def formatter = DateTimeFormatter.ofPattern('yyyyMMddHHmmss')
+        String datePath = ldt.format(formatter)
+
+        // バックアップフォルダへコピー
+        Files.createDirectories(rootPath.resolve("backup").resolve(datePath))
+        backupPath = rootPath.resolve("backup").resolve(datePath).resolve("src")
+        copyDirectory(targetPath, backupPath)
+    }
+
+    def start() {
+        new SwingBuilder().edt {
+            dialog(modal: true, title: 'MOD exporter', alwaysOnTop: true, resizable: true, locationRelativeTo: null, pack: true, show: true, defaultCloseOperation: WindowConstants.DISPOSE_ON_CLOSE) {
+                vbox(alignmentX: 0.0f) { // Put everything below each other
+                    label(text: "MODID を入力して下さい．（半角英小文字）") //set to modid
+                    label(text: "半角英小文字（例：examplemod）") //set to modid
+                    def input1 = textField()
+                    label(text: "MOD の名前を入力して下さい．（半角英数）") //set to modname
+                    label(text: "半角英小文字（例：Example Mod）") //set to modname
+                    def input2 = textField()
+                    label(text: "MODの説明を入力してください．") //set to description
+                    def input3 = textField()
+
+                    button(defaultButton: true, text: 'OK', actionPerformed: {
+                        dispose()
+                        String modid = input1.text
+                        if (!modid.matches("[a-z0-9_.-]")) {
+                            modid = modid.replaceAll("[^a-z0-9_.-]", "_")
+                        }
+                        if (modid != "") {
+                            genExportItem(modid, input2.text, input3.text)
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    def genExportItem(String id, String name, String description) {
+        modName = id
+        println("MOD name:" + id)
+        println("Description:" + description)
+
+        Files.move(
+                targetPath.resolve("main/java/com/example/examplemod"),
+                targetPath.resolve("main/java/com/example/$id"),
+                StandardCopyOption.REPLACE_EXISTING)
+        Files.move(
+                targetPath.resolve("main/resources/assets/examplemod"),
+                targetPath.resolve("main/resources/assets/$id"),
+                StandardCopyOption.REPLACE_EXISTING)
+
+        Files.copy(
+                rootPath.resolve("setup/data/mods.toml"),
+                targetPath.resolve("main/resources/META-INF/mods.toml"),
+                StandardCopyOption.REPLACE_EXISTING)
+
+        renameFileText(targetPath, "examplemod", id)
+
+
+        println("Rename files finished.")
+
+        genModsToml(id, name, description)
+    }
+
+    def copyDirectory(Path source, Path target) throws IOException {
+        if (Files.exists(source)) {
+            Files.walkFileTree(source,
+                    new SimpleFileVisitor<Path>() {
+                        @Override
+                        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                            Path targetFile = target.resolve(source.relativize(file))
+                            Path parentDir = targetFile.getParent()
+                            Files.createDirectories(parentDir)
+                            Files.copy(file, targetFile, StandardCopyOption.REPLACE_EXISTING)
+                            return FileVisitResult.CONTINUE
+                        }
+                    })
+        }
+    }
+
+    def renameFileText(Path targetPath, String src, String replace) {
+        def renameFilePath = new File(targetPath.toString())
+        searchDir(renameFilePath, src, replace)
+    }
+
+    def searchDir(File dir, String src, String replace) {
+        File[] files = dir.listFiles()
+        for (int i = 0; i < files.length; i++) {
+            File file = files[i]
+            if (file.isDirectory()) {
+                searchDir(file, src, replace)
+            } else {
+                if (file.getName().matches(".+\\.(info|json|java|toml)")) {
+                    String[] lines = getLines(file.getPath())
+                    for (int j = 0; j < lines.length; j++) {
+                        lines[j] = lines[j].replaceAll(src, replace)
+                    }
+                    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file.getPath())))
+                    for (int j = 0; j < lines.length; j++) {
+                        out.println(lines[j])
+                    }
+                    out.close()
+                }
+            }
+        }
+    }
+
+    def getLines(String filePath) {
+        BufferedReader inData = new BufferedReader(new FileReader(filePath))
+        ArrayList list = new ArrayList(5000)
+        String line = null
+        while ((line = inData.readLine()) != null) {
+            list.add(line)
+        }
+        String[] lines = new String[list.size()]
+        list.toArray(lines)
+        return lines
+    }
+
+    def genModsToml(String modId, String name, String description) {
+        def location = targetPath.resolve("main/resources/META-INF/mods.toml")
+
+        String data = Files.readString(location).replaceAll("__DESCRIPTION__", description).replaceAll("__NAME__", name)
+        def w = Files.newBufferedWriter(location, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
+        w.write(data)
+        w.close()
+    }
+}
