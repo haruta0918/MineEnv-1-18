@@ -4,49 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b5c4588-0beb-4a1e-82a6-89086d1952b2" name="Changes" comment="Changes">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/MineEnv-1-18.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/MineEnv-1-18.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/MineEnv-1-18.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CREDITS.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntelliJ IDEA CE.lnk" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LICENSE.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_01_myblock/BlockMyBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_03_magicstick/ItemMagicStick.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_05_mysword/ItemMySword.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_12_biome/BiomeUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/mods.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/blockstates/block_myblock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/lang/en_us.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/lang/ja_jp.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/models/block/block_myblock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/models/item/block_myblock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/models/item/magic_stick.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/models/item/my_sword.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/myblock.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/myblock_down.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/myblock_east.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/myblock_particle.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/myblock_south.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/myblock_up.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/myblock_west.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/items/magic_stick.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/items/my_sword.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/pack.mcmeta" afterDir="false" />
+    <list default="true" id="5b5c4588-0beb-4a1e-82a6-89086d1952b2" name="Changes" comment="gradle settings">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_01_myblock/NewBlockMyBlock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_03_magicstick/NewItemMagicStick.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_05_mysword/NewItemMySword.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/items/new_sword.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,12 +40,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="MineEnv-1-18" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="MineEnv-1-18" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="minecraft" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -114,37 +73,41 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2ubl9FwSxuak81xv9BfFHnrWgYc" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Gradle.C:/MineEnv-1-18 [createMcpToSrg].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.MineEnv-1-18 [backupMod].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.MineEnv-1-18 [createMcpToSrg].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.MineEnv-1-18 [runClient].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/MineEnv-1-18/src/main/java/com/example/examplemod/mc_01_myblock&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDK&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/harut/Downloads/MineEnv-1-18&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;モジュール&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.42944786&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\MineEnv-1-18" />
       <recent name="C:\MineEnv-1-18\src\main\java\com\example\examplemod\mc_01_myblock" />
       <recent name="C:\MineEnv-1-18\src\main\resources\assets\examplemod\textures\items" />
       <recent name="C:\MineEnv-1-18\src\main\resources\assets\examplemod\textures\blocks" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.MineEnv-1-18 [backupMod]">
+  <component name="RunManager" selected="Gradle.MineEnv-1-18 [runClient]">
     <configuration name="MineEnv-1-18 [backupMod]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -257,8 +220,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.MineEnv-1-18 [backupMod]" />
         <item itemvalue="Gradle.MineEnv-1-18 [runClient]" />
+        <item itemvalue="Gradle.MineEnv-1-18 [backupMod]" />
         <item itemvalue="Gradle.MineEnv-1-18 [generateItemJson]" />
         <item itemvalue="Gradle.MineEnv-1-18 [generateBlockstateJson]" />
         <item itemvalue="Gradle.MineEnv-1-18 [jar]" />
@@ -274,7 +237,27 @@
       <option name="presentableId" value="Default" />
       <updated>1742525001853</updated>
     </task>
+    <task id="LOCAL-00001" summary="Initial commit">
+      <option name="closed" value="true" />
+      <created>1743659139344</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743659139344</updated>
+    </task>
+    <task id="LOCAL-00002" summary="gradle settings">
+      <option name="closed" value="true" />
+      <created>1743677951265</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743677951265</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.bat" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -298,5 +281,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit" />
+    <MESSAGE value="gradle settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="gradle settings" />
   </component>
 </project>

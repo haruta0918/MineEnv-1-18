@@ -1,0 +1,79 @@
+import groovy.xml.XmlNodePrinter
+import groovy.xml.XmlParser
+
+import java.nio.file.FileSystems
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+
+task updateWorkspace {
+    doLast {
+        def URL = "https://lifeistech.github.io/minecraft-environment-generator/1.18.1"
+
+        def listURL = new URL("$URL/list.txt")
+        if (((HttpURLConnection) listURL.openConnection()).getResponseCode() == 404) {
+            throw new FileNotFoundException("Failed to get file from $listURL")
+        }
+
+        def fileList = new BufferedReader(new InputStreamReader(listURL.openStream()))
+                .lines().filter(s -> s != "" && s[0] != '#')
+
+        fileList.forEach(s -> {
+            def fileName = s.split(" ")[0]
+            def destination = s.split(" ")[1]
+            println "$fileName -> $destination"
+
+            def fileURL = new URL("$URL/$fileName")
+            if (((HttpURLConnection) fileURL.openConnection()).getResponseCode() == 404) {
+                throw new FileNotFoundException("Failed to get file from $fileURL")
+            }
+
+            def placeLocation = FileSystems.getDefault().getPath("${project.rootDir}/$destination")
+            Files.copy(fileURL.openStream(), placeLocation, StandardCopyOption.REPLACE_EXISTING)
+        })
+    }
+}
+
+configure(updateWorkspace) {
+    group = 'minecraft'
+    description = 'Update generateBlockstateJson etc.'
+}
+
+task setupParameters {
+
+    dependsOn "genIntellijRuns"
+
+    doLast {
+        def runClientXml = FileSystems.getDefault()
+                .getPath("${project.rootDir}/.idea/runConfigurations").resolve("runClient.xml").toFile()
+        def root = new XmlParser().parse(runClientXml)
+
+        def defaultArgs = root.configuration.find { it.@name == "runClient" }.option.find { it.@name == "VM_PARAMETERS" }.@value
+
+        def arch = ""
+        if (System.getProperty("os.name") == "Mac OS X") {
+            arch = Files.readAllLines(FileSystems.getDefault().getPath("${project.rootDir}/setup/scripts/arch.txt")).get(0)
+        }
+
+        if (arch == "arm64") {
+            root.configuration.find { it.@name == "runClient" }.option.find { it.@name == "VM_PARAMETERS" }.replaceNode {
+                option(name: "VM_PARAMETERS", value: "-Dfml.earlyprogresswindow=false $defaultArgs")
+            }
+        }
+
+        defaultArgs = root.configuration.find { it.@name == "runClient" }.option.find { it.@name == "PROGRAM_PARAMETERS" }.@value
+
+        def username = "Dev"
+
+        root.configuration.find { it.@name == "runClient" }.option.find { it.@name == "PROGRAM_PARAMETERS" }.replaceNode {
+            option(name: "PROGRAM_PARAMETERS", value: "--username $username $defaultArgs")
+        }
+
+        def sw = new StringWriter()
+        new XmlNodePrinter(new PrintWriter(sw)).print(root)
+
+        def fw = new FileWriter(runClientXml)
+        fw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n")
+        fw.write(sw.toString())
+        fw.close()
+    }
+}

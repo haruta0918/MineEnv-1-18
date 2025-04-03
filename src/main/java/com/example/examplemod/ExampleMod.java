@@ -3,6 +3,7 @@ package com.example.examplemod;
 import com.example.examplemod.mc_01_myblock.BlockMyBlock;
 import com.example.examplemod.mc_03_magicstick.ItemMagicStick;
 import com.example.examplemod.mc_05_mysword.ItemMySword;
+import com.example.examplemod.mc_05_mysword.NewItemMySword;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
@@ -33,12 +34,17 @@ public class ExampleMod {
     //Item
     public static final Item ITEM_MAGIC_STICK =
             new ItemMagicStick().setRegistryName(MODID,"magic_stick");
+    public static final Item NEWITEM_MAGIC_STICK =
+            new ItemMagicStick().setRegistryName(MODID,"new_magic_stick");
 
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static final Block BLOCK_MYBLOCK =
             new BlockMyBlock().setRegistryName(MODID, "block_myblock");
+    public static final Block NEWBLOCK_MYBLOCK =
+            new BlockMyBlock().setRegistryName(MODID, "new_block_myblock");
+
 
 
     public ExampleMod() {
@@ -58,18 +64,23 @@ public class ExampleMod {
 
     public static final Item ITEM_MY_SWORD =
             new ItemMySword().setRegistryName(MODID,"my_sword");
+    public static final Item NEW_ITEM_MY_SWORD =
+            new NewItemMySword().setRegistryName(MODID,"new_my_sword");
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         private static final RegisterBlockData[] registerBlocks = {
                 // ここにBlockを書いてね！
                 new RegisterBlockData(BLOCK_MYBLOCK),
+                new RegisterBlockData(NEWBLOCK_MYBLOCK),
 
         };
 
         private static final Item[] registerItems = {
                 // ここにItemを書いてね！
                 ITEM_MY_SWORD,
+                NEW_ITEM_MY_SWORD,
                 ITEM_MAGIC_STICK,
+                NEWITEM_MAGIC_STICK,
         };
 
         @SubscribeEvent
