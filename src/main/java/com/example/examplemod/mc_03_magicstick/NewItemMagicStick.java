@@ -10,6 +10,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 
 public class NewItemMagicStick extends Item{
@@ -23,17 +24,10 @@ public class NewItemMagicStick extends Item{
         Level level = pTarget.level;
         BlockPos spawnPos =pTarget.blockPosition();
 
-        LivingEntity entity;
-        if (pTarget instanceof Villager) {
-            entity = new Zombie(level);
-        }else {
-            entity = new Pig(EntityType.PIG, level);
-        }
-        entity.setPos(spawnPos.getX(),spawnPos.getY(),spawnPos.getZ());
-        if (!pTarget.level.isClientSide) {
-            ServerLevel serverLevel = (ServerLevel) pTarget.level;
-            serverLevel.tryAddFreshEntityWithPassengers(entity);
-            serverLevel.removeEntity(pTarget);
+if(!level.isClientSide){
+    float explosionRadius = 50f;
+    level.explode(null,pAttacker.getX(),pAttacker.getY(),pAttacker.getZ(),
+            explosionRadius, Explosion.BlockInteraction.BREAK);
 
         }
         return super.hurtEnemy(pStack,pTarget,pAttacker);

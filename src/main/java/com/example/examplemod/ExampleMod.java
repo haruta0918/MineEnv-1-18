@@ -1,7 +1,9 @@
 package com.example.examplemod;
 
 import com.example.examplemod.mc_01_myblock.BlockMyBlock;
+import com.example.examplemod.mc_01_myblock.NewBlockMyBlock;
 import com.example.examplemod.mc_03_magicstick.ItemMagicStick;
+import com.example.examplemod.mc_03_magicstick.NewItemMagicStick;
 import com.example.examplemod.mc_05_mysword.ItemMySword;
 import com.example.examplemod.mc_05_mysword.NewItemMySword;
 import net.minecraft.resources.ResourceKey;
@@ -35,7 +37,7 @@ public class ExampleMod {
     public static final Item ITEM_MAGIC_STICK =
             new ItemMagicStick().setRegistryName(MODID,"magic_stick");
     public static final Item NEWITEM_MAGIC_STICK =
-            new ItemMagicStick().setRegistryName(MODID,"new_magic_stick");
+            new NewItemMagicStick().setRegistryName(MODID,"new_magic_stick");
 
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
@@ -43,7 +45,7 @@ public class ExampleMod {
     public static final Block BLOCK_MYBLOCK =
             new BlockMyBlock().setRegistryName(MODID, "block_myblock");
     public static final Block NEWBLOCK_MYBLOCK =
-            new BlockMyBlock().setRegistryName(MODID, "new_block_myblock");
+            new NewBlockMyBlock().setRegistryName(MODID, "new_block_myblock");
 
 
 

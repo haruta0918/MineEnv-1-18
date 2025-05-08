@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b5c4588-0beb-4a1e-82a6-89086d1952b2" name="Changes" comment="gradle settings">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_01_myblock/NewBlockMyBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_03_magicstick/NewItemMagicStick.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_05_mysword/NewItemMySword.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/items/new_sword.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_01_myblock/NewBlockMyBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_03_magicstick/NewItemMagicStick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_03_magicstick/NewItemMagicStick.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,27 +81,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.C:/MineEnv-1-18 [createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MineEnv-1-18 [backupMod].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MineEnv-1-18 [createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MineEnv-1-18 [runClient].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/harut/Downloads/MineEnv-1-18&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;モジュール&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.42944786&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.C:/MineEnv-1-18 [createMcpToSrg].executor": "Run",
+    "Gradle.MineEnv-1-18 [backupMod].executor": "Run",
+    "Gradle.MineEnv-1-18 [createMcpToSrg].executor": "Run",
+    "Gradle.MineEnv-1-18 [runClient].executor": "Run",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/MineEnv-1-18/src/main/java/com/example/examplemod",
+    "project.structure.last.edited": "モジュール",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.42944786"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\MineEnv-1-18" />
+      <recent name="C:\MineEnv-1-18\src\main\java\com\example\examplemod" />
+      <recent name="C:\MineEnv-1-18\src\main\java\com\example\examplemod\mc_02_fortuneblock" />
       <recent name="C:\MineEnv-1-18\src\main\java\com\example\examplemod\mc_01_myblock" />
+      <recent name="C:\MineEnv-1-18" />
       <recent name="C:\MineEnv-1-18\src\main\resources\assets\examplemod\textures\items" />
-      <recent name="C:\MineEnv-1-18\src\main\resources\assets\examplemod\textures\blocks" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.MineEnv-1-18 [runClient]">
@@ -253,7 +251,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743677951265</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="gradle settings">
+      <option name="closed" value="true" />
+      <created>1746445438346</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1746445438346</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="UnknownFeatures">
