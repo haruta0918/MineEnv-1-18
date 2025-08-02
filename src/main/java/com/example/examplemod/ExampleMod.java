@@ -6,8 +6,16 @@ import com.example.examplemod.mc_03_magicstick.ItemMagicStick;
 import com.example.examplemod.mc_03_magicstick.NewItemMagicStick;
 import com.example.examplemod.mc_05_mysword.ItemMySword;
 import com.example.examplemod.mc_05_mysword.NewItemMySword;
+import com.example.examplemod.mc_06_rainbowblock.BlockRainbow;
+import com.example.examplemod.mc_08_woodcut.BlockBreakEventHandler;
+import com.example.examplemod.mc_10_snowball_fight.EntityMySnowball;
+import com.example.examplemod.mc_10_snowball_fight.ItemMySnowball;
+import com.example.examplemod.mc_11_footprints_sand.BlockFootprintsSand;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -27,13 +35,29 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static java.rmi.registry.LocateRegistry.getRegistry;
+
 @Mod(ExampleMod.MODID)
 public class ExampleMod {
 
     //MODID
     public static final String MODID = "examplemod";
 
+    public static final Block BLOCK_RAINBOW =
+            new BlockRainbow().setRegistryName(MODID, "block_rainbow");
+    public static final Block BLOCK_FOOTPRINTS_SAND =
+            new BlockFootprintsSand().setRegistryName(MODID, "block_footprints_sand");
+    public static final Block NEW_BLOCK_FOOTPRINTS_SAND =
+            new BlockFootprintsSand().setRegistryName(MODID, "new_block_footprints_sand");
+    //Entity
+    public static final EntityType<EntityMySnowball> ENTITY_MY_SNOWBALL =
+            EntityType.Builder.<EntityMySnowball>of(EntityMySnowball::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .build("my_snowball");
     //Item
+    public static final Item ITEM_MY_SNOWBALL =
+            new ItemMySnowball().setRegistryName(MODID,"my_snowball");
     public static final Item ITEM_MAGIC_STICK =
             new ItemMagicStick().setRegistryName(MODID,"magic_stick");
     public static final Item NEWITEM_MAGIC_STICK =
@@ -54,6 +78,7 @@ public class ExampleMod {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -61,6 +86,7 @@ public class ExampleMod {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
+        EntityRenderers.register(ENTITY_MY_SNOWBALL, ThrownItemRenderer::new);
 
     }
 
@@ -72,13 +98,16 @@ public class ExampleMod {
     public static class RegistryEvents {
         private static final RegisterBlockData[] registerBlocks = {
                 // ここにBlockを書いてね！
+                new RegisterBlockData(BLOCK_RAINBOW),
                 new RegisterBlockData(BLOCK_MYBLOCK),
                 new RegisterBlockData(NEWBLOCK_MYBLOCK),
-
+                new RegisterBlockData(BLOCK_FOOTPRINTS_SAND),
+                new RegisterBlockData(NEW_BLOCK_FOOTPRINTS_SAND),
         };
 
         private static final Item[] registerItems = {
                 // ここにItemを書いてね！
+                ITEM_MY_SNOWBALL,
                 ITEM_MY_SWORD,
                 NEW_ITEM_MY_SWORD,
                 ITEM_MAGIC_STICK,
@@ -97,6 +126,7 @@ public class ExampleMod {
 
         @SubscribeEvent
         public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> event) {
+            event.getRegistry().register(ENTITY_MY_SNOWBALL.setRegistryName(MODID,"my_snowball"));
 
         }
 
