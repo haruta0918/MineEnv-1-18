@@ -1,6 +1,5 @@
 package com.example.examplemod.mc_10_snowball_fight;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -8,11 +7,8 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SnowballItem;
 import net.minecraft.world.level.Explosion;
@@ -20,13 +16,10 @@ import net.minecraft.world.level.Level;
 
 import java.util.Random;
 
-import static net.minecraft.nbt.StreamTagVisitor.ValueResult.BREAK;
-import static net.minecraft.world.item.CreativeModeTab.TAB_COMBAT;
+public class ItemTNTball extends SnowballItem {
 
-public class ItemMySnowball extends SnowballItem {
-
-    public ItemMySnowball() {
-        super(new Item.Properties().stacksTo(16).tab(CreativeModeTab.TAB_COMBAT));
+    public ItemTNTball() {
+        super(new Properties().stacksTo(16).tab(CreativeModeTab.TAB_COMBAT));
     }
 
     @Override
@@ -60,8 +53,16 @@ public class ItemMySnowball extends SnowballItem {
                 Thread.sleep(100); // 0.1秒(百ミリ秒)間だけ処理を止める
             } catch (InterruptedException e) {
             }
+            MobEffect effect = MobEffects.DAMAGE_RESISTANCE;
+            int secounds = 1;
+            int potionLevel = 5;
+            playerIn.addEffect(new MobEffectInstance(effect,secounds,potionLevel));
+            effect = MobEffects.SLOW_FALLING;
+            secounds = 100;
+            potionLevel = 3000;
+            playerIn.addEffect(new MobEffectInstance(effect,secounds,potionLevel));
 
-            float explosionRadius = 5f;
+            float explosionRadius = 2f;
             level.explode(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), explosionRadius, Explosion.BlockInteraction.BREAK);
 
         }

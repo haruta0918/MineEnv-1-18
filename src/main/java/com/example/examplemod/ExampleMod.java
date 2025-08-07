@@ -1,9 +1,11 @@
 package com.example.examplemod;
 
 import com.example.examplemod.mc_01_myblock.BlockMyBlock;
+import com.example.examplemod.mc_01_myblock.GenerateBlock;
 import com.example.examplemod.mc_01_myblock.NewBlockMyBlock;
 import com.example.examplemod.mc_03_magicstick.ItemMagicStick;
 import com.example.examplemod.mc_03_magicstick.NewItemMagicStick;
+import com.example.examplemod.mc_04_hipotion.ItemHiPotion;
 import com.example.examplemod.mc_05_mysword.ItemMySword;
 import com.example.examplemod.mc_05_mysword.NewItemMySword;
 import com.example.examplemod.mc_06_rainbowblock.BlockRainbow;
@@ -47,15 +49,22 @@ public class ExampleMod {
             new BlockRainbow().setRegistryName(MODID, "block_rainbow");
     public static final Block BLOCK_FOOTPRINTS_SAND =
             new BlockFootprintsSand().setRegistryName(MODID, "block_footprints_sand");
-    public static final Block NEW_BLOCK_FOOTPRINTS_SAND =
-            new BlockFootprintsSand().setRegistryName(MODID, "new_block_footprints_sand");
     //Entity
     public static final EntityType<EntityMySnowball> ENTITY_MY_SNOWBALL =
             EntityType.Builder.<EntityMySnowball>of(EntityMySnowball::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f)
                     .setShouldReceiveVelocityUpdates(true)
                     .build("my_snowball");
+    public static final EntityType<EntityMySnowball> TNT_BALL =
+            EntityType.Builder.<EntityMySnowball>of(EntityMySnowball::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .build("tnt_snowball");
     //Item
+    public static final Item ITEM_HI_POTION =
+            new ItemHiPotion().setRegistryName(MODID,"hi_potion");
+    public static final Item ITEM_TNT_BALL =
+            new ItemHiPotion().setRegistryName(MODID,"tnt_ball");
     public static final Item ITEM_MY_SNOWBALL =
             new ItemMySnowball().setRegistryName(MODID,"my_snowball");
     public static final Item ITEM_MAGIC_STICK =
@@ -70,6 +79,8 @@ public class ExampleMod {
             new BlockMyBlock().setRegistryName(MODID, "block_myblock");
     public static final Block NEWBLOCK_MYBLOCK =
             new NewBlockMyBlock().setRegistryName(MODID, "new_block_myblock");
+    public static final Block GENERATEBLOCK =
+            new GenerateBlock().setRegistryName(MODID, "generate_block");
 
 
 
@@ -87,8 +98,10 @@ public class ExampleMod {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         EntityRenderers.register(ENTITY_MY_SNOWBALL, ThrownItemRenderer::new);
+        EntityRenderers.register(TNT_BALL, ThrownItemRenderer::new);
 
     }
+
 
     public static final Item ITEM_MY_SWORD =
             new ItemMySword().setRegistryName(MODID,"my_sword");
@@ -102,12 +115,14 @@ public class ExampleMod {
                 new RegisterBlockData(BLOCK_MYBLOCK),
                 new RegisterBlockData(NEWBLOCK_MYBLOCK),
                 new RegisterBlockData(BLOCK_FOOTPRINTS_SAND),
-                new RegisterBlockData(NEW_BLOCK_FOOTPRINTS_SAND),
+                new RegisterBlockData(GENERATEBLOCK),
         };
 
         private static final Item[] registerItems = {
                 // ここにItemを書いてね！
                 ITEM_MY_SNOWBALL,
+                ITEM_TNT_BALL,
+                ITEM_HI_POTION,
                 ITEM_MY_SWORD,
                 NEW_ITEM_MY_SWORD,
                 ITEM_MAGIC_STICK,

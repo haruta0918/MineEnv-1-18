@@ -5,27 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b5c4588-0beb-4a1e-82a6-89086d1952b2" name="Changes" comment="gradle settings">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_06_rainbowblock/BlockRainbow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_08_woodcut/BlockBreakEventHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_10_snowball_fight/EntityMySnowball.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_10_snowball_fight/ItemMySnowball.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_18_eventhandler/LeafEventHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_18_eventhandler/PlayerHurtEventHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/models/item/new_block_myblock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/models/item/new_magic_stick.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/models/item/new_my_sword.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/rainbow_0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/rainbow_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/rainbow_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/rainbow_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/rainbow_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/rainbow_5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/rainbow_6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_01_myblock/GenerateBlock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_04_hipotion/ItemHiPotion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_10_snowball_fight/EntityTNTball.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_10_snowball_fight/ItemTNTball.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/models/block/generate_block.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/diamond_block.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_03_magicstick/NewItemMagicStick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_03_magicstick/NewItemMagicStick.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/examplemod/models/block/block_myblock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/items/new_sword.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/items/new_my_sword.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_03_magicstick/ItemMagicStick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_03_magicstick/ItemMagicStick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_10_snowball_fight/EntityMySnowball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_10_snowball_fight/EntityMySnowball.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_10_snowball_fight/ItemMySnowball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_10_snowball_fight/ItemMySnowball.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,16 +116,20 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\MineEnv-1-18\src\main\resources\assets\examplemod\textures\blocks" />
+      <recent name="C:\MineEnv-1-18\src\main\java\com\example\examplemod\mc_10_snowball_fight" />
+      <recent name="C:\MineEnv-1-18\src\main\resources\assets\examplemod\models\block" />
       <recent name="C:\MineEnv-1-18\src\main\resources\assets\examplemod\models\item" />
       <recent name="C:\MineEnv-1-18\src\main\java\com\example\examplemod" />
-      <recent name="C:\MineEnv-1-18\src\main\java\com\example\examplemod\mc_02_fortuneblock" />
-      <recent name="C:\MineEnv-1-18\src\main\java\com\example\examplemod\mc_01_myblock" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\MineEnv-1-18\src\main\resources\assets\examplemod\textures\blocks" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.examplemod.mc_10_snowball_fight" />
       <recent name="com.example.examplemod.mc_11_footprints_sand" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.MineEnv-1-18 [backupMod]">
+  <component name="RunManager" selected="Gradle.MineEnv-1-18 [runClient]">
     <configuration name="MineEnv-1-18 [backupMod]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -248,8 +242,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.MineEnv-1-18 [backupMod]" />
         <item itemvalue="Gradle.MineEnv-1-18 [runClient]" />
+        <item itemvalue="Gradle.MineEnv-1-18 [backupMod]" />
         <item itemvalue="Gradle.MineEnv-1-18 [generateBlockstateJson]" />
         <item itemvalue="Gradle.MineEnv-1-18 [generateItemJson]" />
         <item itemvalue="Gradle.MineEnv-1-18 [generateRecipeJson]" />
@@ -305,7 +299,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746706976253</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="gradle settings">
+      <option name="closed" value="true" />
+      <created>1754107116539</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1754107116539</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="UnknownFeatures">
