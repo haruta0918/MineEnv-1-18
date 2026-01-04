@@ -1,0 +1,129 @@
+package com.example.examplemod.mc_09_redstone;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
+
+import static net.minecraft.world.item.Items.TNT;
+
+
+public class Trap4 extends Block {
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    public static final double RADIUS = 5.0D;
+    public Trap4() {
+        super(Properties.of(Material.STONE).strength(30f));
+        this.registerDefaultState(this.getStateDefinition().any().setValue(POWERED,false));
+    }
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState > pBuilder){
+        pBuilder.add(POWERED);
+    }
+    @Override
+    public boolean isSignalSource(BlockState pBlockState) {
+        return true;
+    }
+
+    @Override
+    public int getSignal(BlockState pBlockState, BlockGetter pBlockAccess, BlockPos pPos, Direction pSide) {
+        if (pBlockState.getValue(POWERED) == true) {
+            return 15;
+        } else {
+            return 0;
+        }
+    }
+    @Mod.EventBusSubscriber
+    public class ExplosionEventHandler {
+
+        @SubscribeEvent
+        public static void onExplosionDetonate(ExplosionEvent.Detonate event) {
+            // ブロック破壊だけ止める
+            event.getAffectedBlocks().clear();
+        }
+    }
+    @Override
+    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack
+    pStack) {
+        super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
+        pLevel.scheduleTick(pPos, this, 5);
+    }
+    @Override
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, Random rand) {
+        super.tick(state, level, pos, rand);
+
+        AABB aabb = new AABB(
+                pos.getX() - RADIUS,
+                pos.getY() - RADIUS,
+                pos.getZ() - RADIUS,
+                pos.getX() + RADIUS,
+                pos.getY() + RADIUS,
+                pos.getZ() + RADIUS
+        );
+
+        boolean isFound = false;
+        List<Entity> entityList = level.getEntities(null, aabb);
+
+        for (Entity entity : entityList) {
+            if (entity.getType() == EntityType.PLAYER) {
+                isFound = true;
+                break;
+            }
+        }
+
+        // 見た目・状態更新
+        level.setBlockAndUpdate(pos, state.setValue(POWERED, isFound));
+
+        // ★ プレイヤーがいるときだけ作動
+
+            int num = -2;
+            while (num < 2) {
+                int num1 = -2;
+                while (num1 < 2) {
+
+                    PrimedTnt tnt = new PrimedTnt(
+                            level,
+                            pos.getX() - num1 + 0.5,
+                            pos.getY()+1,
+                            pos.getZ() - num + 0.5,
+                            null
+                    );
+
+                    tnt.setFuse(5);
+                    level.addFreshEntity(tnt);
+
+                    num1++;
+                }
+                num++;
+            }
+
+            // ★ 次の tick を予約（プレイヤーがいる間だけ）
+            level.scheduleTick(pos, this, 50); // 1秒ごと
+        }
+
+
+
+
+
+}
+
+

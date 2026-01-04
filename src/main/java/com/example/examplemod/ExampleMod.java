@@ -1,5 +1,7 @@
 package com.example.examplemod;
 
+import com.example.examplemod.BlockCopier.BlockCopier;
+import com.example.examplemod.BlockCopier.LandMineStick;
 import com.example.examplemod.mc_01_myblock.BlockMyBlock;
 import com.example.examplemod.mc_01_myblock.GenerateBlock;
 import com.example.examplemod.mc_01_myblock.NewBlockMyBlock;
@@ -10,6 +12,7 @@ import com.example.examplemod.mc_05_mysword.ItemMySword;
 import com.example.examplemod.mc_05_mysword.NewItemMySword;
 import com.example.examplemod.mc_06_rainbowblock.BlockRainbow;
 import com.example.examplemod.mc_08_woodcut.BlockBreakEventHandler;
+import com.example.examplemod.mc_09_redstone.*;
 import com.example.examplemod.mc_10_snowball_fight.EntityMySnowball;
 import com.example.examplemod.mc_10_snowball_fight.ItemMySnowball;
 import com.example.examplemod.mc_11_footprints_sand.BlockFootprintsSand;
@@ -44,6 +47,14 @@ public class ExampleMod {
 
     //MODID
     public static final String MODID = "examplemod";
+    public static final Block TRAP =new Trap().setRegistryName(MODID,"trap");
+    public static final Block TRAP2 =new Trap2().setRegistryName(MODID,"trap2");
+    public static final Block TRAP3 =new Trap3().setRegistryName(MODID,"trap3");
+    public static final Block TRAP4 =new Trap4().setRegistryName(MODID,"trap4");
+    public static final Block TRAP5 =new Trap5().setRegistryName(MODID,"trap5");
+    public static final Block BLOCK_SENSOR =new BlockSensor().setRegistryName(MODID,"block_sensor");
+    public static final Item BLOCK_COPIER = new BlockCopier().setRegistryName(MODID,"block_copier");
+    public static final Item LANDMINE_STICK = new LandMineStick().setRegistryName(MODID,"landmine_stick");
 
     public static final Block BLOCK_RAINBOW =
             new BlockRainbow().setRegistryName(MODID, "block_rainbow");
@@ -116,6 +127,12 @@ public class ExampleMod {
                 new RegisterBlockData(NEWBLOCK_MYBLOCK),
                 new RegisterBlockData(BLOCK_FOOTPRINTS_SAND),
                 new RegisterBlockData(GENERATEBLOCK),
+                new RegisterBlockData(BLOCK_SENSOR),
+                new RegisterBlockData(TRAP),
+                new RegisterBlockData(TRAP2),
+                new RegisterBlockData(TRAP3),
+                new RegisterBlockData(TRAP4),
+                new RegisterBlockData(TRAP5)
         };
 
         private static final Item[] registerItems = {
@@ -127,6 +144,9 @@ public class ExampleMod {
                 NEW_ITEM_MY_SWORD,
                 ITEM_MAGIC_STICK,
                 NEWITEM_MAGIC_STICK,
+                BLOCK_COPIER,
+                LANDMINE_STICK,
+
         };
 
         @SubscribeEvent
