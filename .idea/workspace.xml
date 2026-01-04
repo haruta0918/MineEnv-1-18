@@ -5,24 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b5c4588-0beb-4a1e-82a6-89086d1952b2" name="Changes" comment="gradle settings">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/BlockCopier/BlockCopier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/BlockCopier/LandMineStick.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_09_redstone/BlockSensor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_09_redstone/Trap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_09_redstone/Trap2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_09_redstone/Trap3.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_09_redstone/Trap4.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_09_redstone/Trap5.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/models/item/landmine_stick.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/sensor.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/test.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/blocks/trap2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/items/block_copier.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/items/landmine_stick.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/examplemod/textures/items/test.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_18_eventhandler/PlayerHurtEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/mc_18_eventhandler/PlayerHurtEventHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -326,7 +309,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754562276643</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="gradle settings">
+      <option name="closed" value="true" />
+      <created>1767508239236</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1767508239236</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="UnknownFeatures">
